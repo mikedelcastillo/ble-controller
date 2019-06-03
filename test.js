@@ -2,7 +2,7 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const noble = require('noble-mac');
+const noble = require('noble');
 const ioHook = require('iohook');
 const boardUUID = '79be46fd20d4439a9210ac642eb49772';
 
