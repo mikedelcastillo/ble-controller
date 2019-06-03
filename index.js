@@ -27,6 +27,19 @@ function update() {
                     selectedPeripheral.discoverServices();
                     update()
                 });
+                selectedPeripheral.on('servicesDiscover', services => {
+                    services.forEach(serivce => {
+                        serivce.on('includedServicesDiscover', includedServiceUuids => {
+                            serivce.discoverCharacteristics()
+                        })
+                        serivce.on('characteristicsDiscover', characteristics => {
+                            characteristics.on('read', (data, isNotification) => {
+                                update()
+                                console.log("WEW: " + data.toString)
+                            })
+                        })
+                    })
+                })
                 selectedPeripheral.connect();
 
                 update()
@@ -35,7 +48,7 @@ function update() {
     } else { // Controll device
         console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
         console.log(`State: ${selectedPeripheral.state}`)
-        console.log(selectedPeripheral.services)
+        console.log(`Services: ${selectedPeripheral.services.length}`)
     }
 }
 
