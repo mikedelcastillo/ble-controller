@@ -43,8 +43,7 @@ function update() {
                     update()
                 })
                 selectedPeripheral.on('disconnect', () => {
-                    selectedPeripheral = null
-                    selectedCharacteristic = null
+                    process.exit()
                     update()
                 })
                 selectedPeripheral.on('rssiUpdate', function (rssi) {
