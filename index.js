@@ -28,11 +28,15 @@ function update() {
                     update()
                 });
                 selectedPeripheral.on('servicesDiscover', services => {
+                    console.log("services blah")
+                    update()
                     services.forEach(serivce => {
                         serivce.on('includedServicesDiscover', includedServiceUuids => {
+                            console.log("included blah")
                             service.discoverCharacteristics()
                         })
                         serivce.on('characteristicsDiscover', characteristics => {
+                            console.log("chars blah")
                             characteristics.forEach(characteristic => {
                                 characteristic.on('read', (data, isNotification) => {
                                     update()
