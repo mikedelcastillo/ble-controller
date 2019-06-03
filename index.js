@@ -11,23 +11,17 @@ function receive(data) {
 }
 
 function send(string) {
-    if (selectedPeripheral) {
-        if (!selectedPeripheral.services) return
-        selectedPeripheral.services.forEach(service => {
-            if (!service || service.uuid != "dfb0") return
-            service.characteristics.forEach(characteristic => {
-                characteristic.write(
-                    new Buffer(string),
-                    true,
-                    function (error) {
-                        if (!error) {
-                            // good
-                        } else {
-                            // no
-                        }
-                    });
-            })
-        })
+    if (selectedPeripheral && selectedCharacteristic) {
+        selectedCharacteristic.write(
+            new Buffer(string),
+            true,
+            function (error) {
+                if (!error) {
+                    // good
+                } else {
+                    // no
+                }
+            });
     }
 }
 
@@ -47,7 +41,7 @@ function update() {
                 })
                 selectedPeripheral.on('disconnect', () => {
                     selectedPeripheral = null
-                    console.log("Disconnected")
+                    selectedCharacteristic = null
                     update()
                 })
                 selectedPeripheral.on('rssiUpdate', function (rssi) {
@@ -77,7 +71,15 @@ function update() {
         if (!selectedPeripheral.services) return console.log("Waiting for services...")
         selectedPeripheral.services.forEach(s => Array.prototype.push.apply(chars, (s.characteristics || [])))
         console.log("Select characteristic...")
-        console.log(chars)
+        for(let index = 0; index < chars.length; index++){
+            let char = chars[index]
+            console.log(`${index + 1}: ${char.name} (uuid: ${char.uuid})`)
+
+            if(keys[index + 2]){
+                selectedCharacteristic = char
+                selectedCharacteristic.on(read, (data) => receive(data.toString))
+            }
+        }
     } else { // Communicate with device
         console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
         console.log(`State: ${selectedPeripheral.state}`)
