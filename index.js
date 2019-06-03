@@ -8,7 +8,10 @@ let keys = {}
 
 function update() {
     if (mode == 0) { // Select device
-        console.log(discovered)
+        console.clear()
+        discovered.forEach((peripheral, index) => {
+            console.log(`${index + 1}: ${peripheral.advertisment.localName}`)
+        })
     } else if (mode == 1) { // Controll device
 
     }
@@ -29,12 +32,12 @@ noble.on('discover', peripheral => {
 
 ioHook.on('keydown', e => {
     keys[e.keycode] = true
-    console.log(e)
+    update()
 })
 
 ioHook.on('keyup', e => {
     keys[e.keycode] = false
-    console.log(keys)
+    update()
 })
 
 ioHook.start()
