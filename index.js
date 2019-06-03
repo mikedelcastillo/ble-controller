@@ -15,54 +15,54 @@ function update() {
             if(keys[index + 2]){
                 selectedPeripheral = peripheral
 
-                // selectedPeripheral.on('connect',  () => {
-                //     selectedPeripheral.updateRssi()
-                //     update()
-                // })
-                // selectedPeripheral.on('disconnect',  () => {
-                //     selectedPeripheral = null
-                //     console.log("Disconnected")
-                //     update()
-                // })
-                // selectedPeripheral.on('rssiUpdate', function (rssi) {
-                //     selectedPeripheral.discoverServices();
-                //     update()
-                // });
-                // selectedPeripheral.on('servicesDiscover', services => {
-                //     console.log("services blah")
-                //     update()
-                //     services.forEach(service => {
-                //         service.on('includedServicesDiscover', includedServiceUuids => {
-                //             console.log("included blah")
-                //             service.discoverCharacteristics()
-                //         })
-                //         service.on('characteristicsDiscover', characteristics => {
-                //             console.log("chars blah")
-                //             characteristics.forEach(characteristic => {
-                //                 characteristic.on('read', (data, isNotification) => {
-                //                     update()
-                //                     console.log("WEW: " + data.toString)
-                //                 })
-                //                 setInterval( () => {
-                //                     console.log("sending shit")
-                //                     characteristic.write(
-                //                         new Buffer("shit"),
-                //                         true,
-                //                         function (error) {
-                //                             if (!error) {
-                //                                 console.log(str, 'write succesfull');
-                //                             } else {
-                //                                 console.log('write unsuccessfull');
-                //                             }
-                //                         });
-                //                 }, 1000)
+                selectedPeripheral.on('connect',  () => {
+                    selectedPeripheral.updateRssi()
+                    update()
+                })
+                selectedPeripheral.on('disconnect',  () => {
+                    selectedPeripheral = null
+                    console.log("Disconnected")
+                    update()
+                })
+                selectedPeripheral.on('rssiUpdate', function (rssi) {
+                    selectedPeripheral.discoverServices();
+                    update()
+                });
+                selectedPeripheral.on('servicesDiscover', services => {
+                    console.log("services blah")
+                    update()
+                    services.forEach(service => {
+                        service.on('includedServicesDiscover', includedServiceUuids => {
+                            console.log("included blah")
+                            service.discoverCharacteristics()
+                        })
+                        service.on('characteristicsDiscover', characteristics => {
+                            console.log("chars blah")
+                            characteristics.forEach(characteristic => {
+                                characteristic.on('read', (data, isNotification) => {
+                                    update()
+                                    console.log("WEW: " + data.toString)
+                                })
+                                setInterval( () => {
+                                    console.log("sending shit")
+                                    characteristic.write(
+                                        new Buffer("shit"),
+                                        true,
+                                        function (error) {
+                                            if (!error) {
+                                                console.log(str, 'write succesfull');
+                                            } else {
+                                                console.log('write unsuccessfull');
+                                            }
+                                        });
+                                }, 1000)
                                 
-                //             })
+                            })
                             
-                //         })
-                //         service.discoverIncludedServices()
-                //     })
-                // })
+                        })
+                        service.discoverIncludedServices()
+                    })
+                })
                 selectedPeripheral.connect();
 
                 update()
@@ -77,7 +77,7 @@ function update() {
 
 noble.on('stateChange', (state) => {
     console.log('NOBLE[STATE_CHANGE]: ' + state)
-    return state === 'poweredOn' ? noble.startScanning() : noble.stopScanning()
+    return (state === 'poweredOn') ? noble.startScanning() : noble.stopScanning()
 })
 
 noble.on('scanStart', () => console.log('NOBLE[SCAN]: start'))
