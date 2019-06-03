@@ -33,7 +33,7 @@ function update() {
             }
         }
     } else { // Controll device
-        console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${peripheral.uuid})`)
+        console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
         console.log(`State: ${selectedPeripheral.state}`)
         console.log(selectedPeripheral.services)
     }
