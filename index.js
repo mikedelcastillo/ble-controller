@@ -31,7 +31,6 @@ function update() {
                     console.log("services blah")
                     update()
                     services.forEach(serivce => {
-                        service.discoverIncludedServices()
                         serivce.on('includedServicesDiscover', includedServiceUuids => {
                             console.log("included blah")
                             service.discoverCharacteristics()
@@ -60,6 +59,7 @@ function update() {
                             })
                             
                         })
+                        service.discoverIncludedServices()
                     })
                 })
                 selectedPeripheral.connect();
