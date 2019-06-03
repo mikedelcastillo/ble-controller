@@ -10,7 +10,7 @@ function update() {
     if (mode == 0) { // Select device
         console.clear()
         discovered.forEach((peripheral, index) => {
-            console.log(`${index + 1}: ${peripheral.advertisment.localName}`)
+            console.log(`${index + 1}: ${peripheral.advertisement.localName}`)
         })
     } else if (mode == 1) { // Controll device
 
