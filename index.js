@@ -35,3 +35,5 @@ ioHook.on('keyup', e => {
     keys[e.keycode] = false
     console.log(keys)
 })
+
+ioHook.start()
