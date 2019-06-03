@@ -43,19 +43,19 @@ function update() {
                                     update()
                                     console.log("WEW: " + data.toString)
                                 })
-                                setInterval( () => {
-                                    console.log("sending shit")
-                                    characteristic.write(
-                                        new Buffer("shit"),
-                                        true,
-                                        function (error) {
-                                            if (!error) {
-                                                console.log('write succesfull');
-                                            } else {
-                                                console.log('write unsuccessfull');
-                                            }
-                                        });
-                                }, 1000)
+                                // setInterval( () => {
+                                //     console.log("sending shit")
+                                //     characteristic.write(
+                                //         new Buffer("shit"),
+                                //         true,
+                                //         function (error) {
+                                //             if (!error) {
+                                //                 console.log('write succesfull');
+                                //             } else {
+                                //                 console.log('write unsuccessfull');
+                                //             }
+                                //         });
+                                // }, 1000)
                                 
                             })
                             
@@ -71,7 +71,7 @@ function update() {
     } else { // Controll device
         console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
         console.log(`State: ${selectedPeripheral.state}`)
-        console.log(`Services: ${selectedPeripheral.services}`)
+        console.log(selectedPeripheral)
     }
 }
 
