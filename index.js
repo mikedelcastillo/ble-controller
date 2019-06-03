@@ -33,7 +33,7 @@ function update() {
         console.log("Select a device...")
         for (let index = 0; index < discoveredPeripherals.length; index++) {
             let keyPair = keyMapping[index]
-            let peripheral = discoveredPeripherals[index]
+            let perigpheral = discoveredPeripherals[index]
             console.log(`${keyPair[0]}: (uuid: ${peripheral.uuid}) ${peripheral.advertisement.localName}`)
             if (keys[keyPair[1]]) {
                 selectedPeripheral = peripheral
@@ -81,7 +81,7 @@ function update() {
 
             if(keys[keyPair[1]]){
                 selectedCharacteristic = char
-                selectedCharacteristic.on(read, (data) => receive(data.toString))
+                selectedCharacteristic.on("read", (data) => receive(data.toString))
             }
         }
     } else { // Communicate with device
