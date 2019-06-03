@@ -45,7 +45,7 @@ function update() {
                                 setInterval( () => {
                                     console.log("sending shit")
                                     characteristic.write(
-                                        "shit",
+                                        new Buffer("shit"),
                                         true,
                                         function (error) {
                                             if (!error) {
