@@ -9,9 +9,12 @@ let keys = {}
 function update() {
     if (mode == 0) { // Select device
         console.clear()
-        discovered.forEach((peripheral, index) => {
-            console.log(`${index + 1}: ${peripheral.advertisement.localName}`)
-        })
+        console.log("Select a device...")
+        for(let index = 0; i < discovered.length; i++){
+            let peripheral = discovered[index]
+            console.log(`${index + 1}: ${peripheral.advertisement.localName} (uuid: ${peripheral.uuid})`)
+            if(key[index + 2]) console.log("this one?")
+        }
     } else if (mode == 1) { // Controll device
 
     }
