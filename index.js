@@ -48,7 +48,7 @@ function update() {
     } else { // Controll device
         console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
         console.log(`State: ${selectedPeripheral.state}`)
-        console.log(`Services: ${selectedPeripheral.services.length}`)
+        console.log(`Services: ${selectedPeripheral.services}`)
     }
 }
 
