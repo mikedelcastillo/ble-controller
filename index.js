@@ -81,7 +81,9 @@ function update() {
 
             if(keys[keyPair[1]]){
                 selectedCharacteristic = char
-                selectedCharacteristic.on("read", (data) => receive(data.toString))
+                selectedCharacteristic.on("read", (data) => {
+                    return receive(data.toString())
+                })
             }
         }
     } else { // Communicate with device
