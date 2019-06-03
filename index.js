@@ -28,7 +28,7 @@ function send(string) {
 }
 
 function update() {
-    // console.clear()
+    console.clear()
     if (selectedPeripheral == null) { // Select device
         console.log("Select a device...")
         for (let index = 0; index < discoveredPeripherals.length; index++) {
