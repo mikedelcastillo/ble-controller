@@ -11,7 +11,9 @@ function receive(data) {
 
 function send(string) {
     if (selectedPeripheral) {
+        if(!selectedPeripheral.services) return
         selectedPeripheral.services.forEach(service => {
+            if(!service) return
             service.characteristics.forEach(characteristic => {
                 characteristic.write(
                     new Buffer(string),
