@@ -3,10 +3,11 @@ const ioHook = require('iohook')
 
 let discoveredPeripherals = []
 let selectedPeripheral = null
+let selectedCharacteristic = null
 let keys = {}
 
 function receive(data) {
-    console.log(data)
+    console.log("RECEIVED: " + data)
 }
 
 function send(string) {
@@ -82,7 +83,6 @@ function update() {
     } else { // Controll device
         console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
         console.log(`State: ${selectedPeripheral.state}`)
-        console.log(selectedPeripheral)
     }
 }
 
