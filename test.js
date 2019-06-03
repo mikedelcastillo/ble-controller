@@ -4,7 +4,7 @@
 
 const noble = require('noble');
 const ioHook = require('iohook');
-const boardUUID = '79be46fd20d4439a9210ac642eb49772';
+const boardUUID = '28f07648bc81';
 
 noble.on('stateChange', function(state) {
   console.log('on -> stateChange: ', state);
