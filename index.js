@@ -1,22 +1,38 @@
 const noble = require('noble')
 const ioHook = require('iohook')
 
-let mode = 0
-let discovered = []
-let selected = null
+let discoveredPeripherals = []
+let selectedPeripheral = null
 let keys = {}
 
 function update() {
-    if (mode == 0) { // Select device
+    if (selectedPeripheral == null) { // Select device
         console.clear()
         console.log("Select a device...")
-        for(let index = 0; index < discovered.length; index++){
-            let peripheral = discovered[index]
+        for(let index = 0; index < discoveredPeripherals.length; index++){
+            let peripheral = discoveredPeripherals[index]
             console.log(`${index + 1}: ${peripheral.advertisement.localName} (uuid: ${peripheral.uuid})`)
-            if(keys[index + 2]) console.log("this one?")
-        }
-    } else if (mode == 1) { // Controll device
+            if(keys[index + 2]){
+                selectedPeripheral = peripheral
 
+                selectedPeripheral.on('connect',  () => {
+                    selectedPeripheral.updateRssi()
+                    update()
+                })
+                selectedPeripheral.on('disconnect',  () => {
+                    selectedPeripheral = null
+                    update()
+                })
+                selectedPeripheral.on('rssiUpdate', function (rssi) {
+                    selectedPeripheral.discoverServices();
+                    update()
+                });
+
+                update()
+            }
+        }
+    } else { // Controll device
+        console.log(selectedPeripheral)
     }
 }
 
@@ -29,7 +45,7 @@ noble.on('scanStart', () => console.log('NOBLE[SCAN]: start'))
 noble.on('scanStop', () => console.log('NOBLE[SCAN]: stop'))
 
 noble.on('discover', peripheral => {
-    discovered.push(peripheral)
+    discoveredPeripherals.push(peripheral)
     update()
 })
 
