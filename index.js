@@ -12,9 +12,9 @@ function receive(data) {
 
 function send(string) {
     if (selectedPeripheral) {
-        if(!selectedPeripheral.services) return
+        if (!selectedPeripheral.services) return
         selectedPeripheral.services.forEach(service => {
-            if(!service || service.uuid != "dfb0") return
+            if (!service || service.uuid != "dfb0") return
             service.characteristics.forEach(characteristic => {
                 characteristic.write(
                     new Buffer(string),
@@ -55,22 +55,14 @@ function update() {
                     update()
                 });
                 selectedPeripheral.on('servicesDiscover', services => {
-                    console.log("services blah")
                     update()
                     services.forEach(service => {
                         service.on('includedServicesDiscover', includedServiceUuids => {
-                            console.log("included blah")
                             service.discoverCharacteristics()
+                            update()
                         })
                         service.on('characteristicsDiscover', characteristics => {
-                            console.log("chars blah")
-                            characteristics.forEach(characteristic => {
-                                characteristic.on('read', (data, isNotification) => {
-                                    receive(data.toString())
-                                    update()
-                                })
-                            })
-
+                            update()
                         })
                         service.discoverIncludedServices()
                     })
@@ -80,7 +72,12 @@ function update() {
                 update()
             }
         }
-    } else { // Controll device
+    } else if (selectedCharacteristic == null) { // Select characteristic
+        let chars = []
+            (selectedPeripheral.services || []).forEach(s => Array.prototype.push.apply(chars, (s.characteristics || [])))
+        console.log("Select characteristic...")
+        console.log(chars)
+    } else { // Communicate with device
         console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
         console.log(`State: ${selectedPeripheral.state}`)
     }
