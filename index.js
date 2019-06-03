@@ -8,7 +8,7 @@ let keys = {}
 
 function update() {
     if (mode == 0) { // Select device
-
+        console.log(discovered)
     } else if (mode == 1) { // Controll device
 
     }
@@ -23,7 +23,8 @@ noble.on('scanStart', () => console.log('NOBLE[SCAN]: start'))
 noble.on('scanStop', () => console.log('NOBLE[SCAN]: stop'))
 
 noble.on('discover', peripheral => {
-
+    discovered.push(peripheral)
+    update()
 })
 
 ioHook.on('keydown', e => {
