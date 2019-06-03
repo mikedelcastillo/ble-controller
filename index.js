@@ -47,7 +47,7 @@ function update() {
                                         } else {
                                             console.log('write unsuccessfull');
                                         }
-                                    }.);
+                                    });
                             })
                             
                         })
