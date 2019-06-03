@@ -5,21 +5,44 @@ let discoveredPeripherals = []
 let selectedPeripheral = null
 let keys = {}
 
+function receive(data) {
+    console.log(data)
+}
+
+function send(string) {
+    if (selectedPeripheral) {
+        selectedPeripheral.services.forEach(service => {
+            service.characteristics.forEach(characteristic => {
+                characteristic.write(
+                    new Buffer(string),
+                    true,
+                    function (error) {
+                        if (!error) {
+                            // good
+                        } else {
+                            // no
+                        }
+                    });
+            })
+        })
+    }
+}
+
 function update() {
     // console.clear()
     if (selectedPeripheral == null) { // Select device
         console.log("Select a device...")
-        for(let index = 0; index < discoveredPeripherals.length; index++){
+        for (let index = 0; index < discoveredPeripherals.length; index++) {
             let peripheral = discoveredPeripherals[index]
             console.log(`${index + 1}: ${peripheral.advertisement.localName} (uuid: ${peripheral.uuid})`)
-            if(keys[index + 2]){
+            if (keys[index + 2]) {
                 selectedPeripheral = peripheral
 
-                selectedPeripheral.on('connect',  () => {
+                selectedPeripheral.on('connect', () => {
                     selectedPeripheral.updateRssi()
                     update()
                 })
-                selectedPeripheral.on('disconnect',  () => {
+                selectedPeripheral.on('disconnect', () => {
                     selectedPeripheral = null
                     console.log("Disconnected")
                     update()
@@ -40,25 +63,11 @@ function update() {
                             console.log("chars blah")
                             characteristics.forEach(characteristic => {
                                 characteristic.on('read', (data, isNotification) => {
+                                    receive(data.toString())
                                     update()
-                                    console.log("WEW: " + data.toString)
                                 })
-                                // setInterval( () => {
-                                //     console.log("sending shit")
-                                //     characteristic.write(
-                                //         new Buffer("shit"),
-                                //         true,
-                                //         function (error) {
-                                //             if (!error) {
-                                //                 console.log('write succesfull');
-                                //             } else {
-                                //                 console.log('write unsuccessfull');
-                                //             }
-                                //         });
-                                // }, 1000)
-                                
                             })
-                            
+
                         })
                         service.discoverIncludedServices()
                     })
@@ -90,11 +99,13 @@ noble.on('discover', peripheral => {
 
 ioHook.on('keydown', e => {
     keys[e.keycode] = true
+    send("1")
     update()
 })
 
 ioHook.on('keyup', e => {
     keys[e.keycode] = false
+    send("0")
     update()
 })
 
