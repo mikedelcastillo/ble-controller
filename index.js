@@ -33,7 +33,7 @@ function update() {
                     services.forEach(serivce => {
                         serivce.on('includedServicesDiscover', includedServiceUuids => {
                             console.log("included blah")
-                            service.discoverCharacteristics()
+                            service.discoverCharacteristics([], console.log)
                         })
                         serivce.on('characteristicsDiscover', characteristics => {
                             console.log("chars blah")
