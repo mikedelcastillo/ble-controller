@@ -28,7 +28,7 @@ noble.on('discover', peripheral => {
 
 ioHook.on('keydown', e => {
     keys[e.keycode] = true
-    console.log(keys)
+    console.log(e)
 })
 
 ioHook.on('keyup', e => {
