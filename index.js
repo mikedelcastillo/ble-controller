@@ -30,7 +30,7 @@ function update() {
                 selectedPeripheral.on('servicesDiscover', services => {
                     services.forEach(serivce => {
                         serivce.on('includedServicesDiscover', includedServiceUuids => {
-                            serivce.discoverCharacteristics()
+                            selectedPeripheral.discoverCharacteristics()
                         })
                         serivce.on('characteristicsDiscover', characteristics => {
                             characteristics.forEach(characteristic => {
