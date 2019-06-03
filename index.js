@@ -21,6 +21,7 @@ function update() {
                 })
                 selectedPeripheral.on('disconnect',  () => {
                     selectedPeripheral = null
+                    console.log("Disconnected")
                     update()
                 })
                 selectedPeripheral.on('rssiUpdate', function (rssi) {
