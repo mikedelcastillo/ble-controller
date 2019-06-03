@@ -30,7 +30,7 @@ function update() {
                 selectedPeripheral.on('servicesDiscover', services => {
                     services.forEach(serivce => {
                         serivce.on('includedServicesDiscover', includedServiceUuids => {
-                            selectedPeripheral.discoverCharacteristics()
+                            service.discoverCharacteristics()
                         })
                         serivce.on('characteristicsDiscover', characteristics => {
                             characteristics.forEach(characteristic => {
@@ -38,16 +38,20 @@ function update() {
                                     update()
                                     console.log("WEW: " + data.toString)
                                 })
-                                characteristic.write(
-                                    "shit",
-                                    true,
-                                    function (error) {
-                                        if (!error) {
-                                            console.log(str, 'write succesfull');
-                                        } else {
-                                            console.log('write unsuccessfull');
-                                        }
-                                    });
+                                setInterval( () => {
+                                    console.log("sending shit")
+                                    characteristic.write(
+                                        "shit",
+                                        true,
+                                        function (error) {
+                                            if (!error) {
+                                                console.log(str, 'write succesfull');
+                                            } else {
+                                                console.log('write unsuccessfull');
+                                            }
+                                        });
+                                }, 1000)
+                                
                             })
                             
                         })
