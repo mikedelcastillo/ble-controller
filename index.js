@@ -6,8 +6,8 @@ let selectedPeripheral = null
 let keys = {}
 
 function update() {
+    console.clear()
     if (selectedPeripheral == null) { // Select device
-        console.clear()
         console.log("Select a device...")
         for(let index = 0; index < discoveredPeripherals.length; index++){
             let peripheral = discoveredPeripherals[index]
@@ -27,12 +27,15 @@ function update() {
                     selectedPeripheral.discoverServices();
                     update()
                 });
+                selectedPeripheral.connect();
 
                 update()
             }
         }
     } else { // Controll device
-        console.log(selectedPeripheral)
+        console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${peripheral.uuid})`)
+        console.log(`State: ${selectedPeripheral.state}`)
+        console.log(selectedPeripheral.services)
     }
 }
 
