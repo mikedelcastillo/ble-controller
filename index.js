@@ -74,7 +74,8 @@ function update() {
         }
     } else if (selectedCharacteristic == null) { // Select characteristic
         let chars = []
-            (selectedPeripheral.services || []).forEach(s => Array.prototype.push.apply(chars, (s.characteristics || [])))
+        if (!selectedPeripheral.services) return console.log("Waiting for services...")
+        selectedPeripheral.services.forEach(s => Array.prototype.push.apply(chars, (s.characteristics || [])))
         console.log("Select characteristic...")
         console.log(chars)
     } else { // Communicate with device
