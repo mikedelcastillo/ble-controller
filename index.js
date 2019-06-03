@@ -1,3 +1,5 @@
+const {keyMapping} = require('./mapping')
+
 const noble = require('noble')
 const ioHook = require('iohook')
 
@@ -30,9 +32,10 @@ function update() {
     if (selectedPeripheral == null) { // Select device
         console.log("Select a device...")
         for (let index = 0; index < discoveredPeripherals.length; index++) {
+            let keyPair = keyMapping[index]
             let peripheral = discoveredPeripherals[index]
-            console.log(`${index + 1}: ${peripheral.advertisement.localName} (uuid: ${peripheral.uuid})`)
-            if (keys[index + 2]) {
+            console.log(`${keyPair[0]}: (uuid: ${peripheral.uuid}) ${peripheral.advertisement.localName}`)
+            if (keys[keyPair[1]]) {
                 selectedPeripheral = peripheral
 
                 selectedPeripheral.on('connect', () => {
@@ -72,16 +75,17 @@ function update() {
         selectedPeripheral.services.forEach(s => Array.prototype.push.apply(chars, (s.characteristics || [])))
         console.log("Select characteristic...")
         for(let index = 0; index < chars.length; index++){
+            let keyPair = keyMapping[index]
             let char = chars[index]
-            console.log(`${index + 1}: ${char.name} (uuid: ${char.uuid})`)
+            console.log(`${keyPair[0]}: (uuid: ${char.uuid}) ${char.name}`)
 
-            if(keys[index + 2]){
+            if(keys[keyPair[1]]){
                 selectedCharacteristic = char
                 selectedCharacteristic.on(read, (data) => receive(data.toString))
             }
         }
     } else { // Communicate with device
-        console.log(`Selected: ${selectedPeripheral.advertisement.localName}  (uuid: ${selectedPeripheral.uuid})`)
+        console.log(`Selected: (uuid: ${selectedPeripheral.uuid}) ${selectedPeripheral.advertisement.localName}`)
         console.log(`State: ${selectedPeripheral.state}`)
     }
 }
