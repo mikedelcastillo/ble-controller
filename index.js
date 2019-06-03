@@ -50,7 +50,7 @@ function update() {
                                         true,
                                         function (error) {
                                             if (!error) {
-                                                console.log(str, 'write succesfull');
+                                                console.log('write succesfull');
                                             } else {
                                                 console.log('write unsuccessfull');
                                             }
