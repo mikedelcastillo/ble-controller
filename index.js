@@ -10,7 +10,7 @@ function update() {
     if (mode == 0) { // Select device
         console.clear()
         console.log("Select a device...")
-        for(let index = 0; i < discovered.length; i++){
+        for(let index = 0; index < discovered.length; index++){
             let peripheral = discovered[index]
             console.log(`${index + 1}: ${peripheral.advertisement.localName} (uuid: ${peripheral.uuid})`)
             if(key[index + 2]) console.log("this one?")
