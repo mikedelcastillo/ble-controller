@@ -33,7 +33,7 @@ function update() {
         console.log("Select a device...")
         for (let index = 0; index < discoveredPeripherals.length; index++) {
             let keyPair = keyMapping[index]
-            let perigpheral = discoveredPeripherals[index]
+            let peripheral = discoveredPeripherals[index]
             console.log(`${keyPair[0]}: (uuid: ${peripheral.uuid}) ${peripheral.advertisement.localName}`)
             if (keys[keyPair[1]]) {
                 selectedPeripheral = peripheral
