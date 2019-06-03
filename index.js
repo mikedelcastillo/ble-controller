@@ -13,7 +13,7 @@ function send(string) {
     if (selectedPeripheral) {
         if(!selectedPeripheral.services) return
         selectedPeripheral.services.forEach(service => {
-            if(!service) return
+            if(!service || service.uuid != "1800") return
             service.characteristics.forEach(characteristic => {
                 characteristic.write(
                     new Buffer(string),
