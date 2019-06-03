@@ -6,7 +6,7 @@ let selectedPeripheral = null
 let keys = {}
 
 function update() {
-    console.clear()
+    // console.clear()
     if (selectedPeripheral == null) { // Select device
         console.log("Select a device...")
         for(let index = 0; index < discoveredPeripherals.length; index++){
@@ -33,10 +33,23 @@ function update() {
                             serivce.discoverCharacteristics()
                         })
                         serivce.on('characteristicsDiscover', characteristics => {
-                            characteristics.on('read', (data, isNotification) => {
-                                update()
-                                console.log("WEW: " + data.toString)
+                            characteristics.forEach(characteristic => {
+                                characteristic.on('read', (data, isNotification) => {
+                                    update()
+                                    console.log("WEW: " + data.toString)
+                                })
+                                characteristic.write(
+                                    "shit",
+                                    true,
+                                    function (error) {
+                                        if (!error) {
+                                            console.log(str, 'write succesfull');
+                                        } else {
+                                            console.log('write unsuccessfull');
+                                        }
+                                    }.);
                             })
+                            
                         })
                     })
                 })
