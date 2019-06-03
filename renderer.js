@@ -3,7 +3,7 @@
 // All of the Node.js APIs are available in this process.
 
 const noble = require('noble-mac');
-const ioHook = require('iohook');
+
 const boardUUID = '79be46fd20d4439a9210ac642eb49772';
 
 noble.on('stateChange', function(state) {
@@ -104,8 +104,8 @@ noble.on('discover', function(peripheral) {
           }.bind(this));
         }
 
-        ioHook.on('keydown', e => {
-          console.log(e.keycode);
+        window.addEventListener('keydown', e => {
+          console.log(e.which);
           // let d = {
           //   87: 2,
           //   83: 4,
@@ -123,11 +123,11 @@ noble.on('discover', function(peripheral) {
             65: 8,
           };
 
-          let s = d[e.keycode];
+          let s = d[e.which];
           if(s) send(s);
         }, false);
 
-        ioHook.on('keyup', e => {
+        window.addEventListener('keyup', e => {
           // let d = {
           //   87: 1,
           //   83: 3,
@@ -142,7 +142,7 @@ noble.on('discover', function(peripheral) {
             65: 7,
           };
 
-          let s = d[e.keycode];
+          let s = d[e.which];
           if(s) send(s.toString());
         }, false);
 

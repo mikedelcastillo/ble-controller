@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "linux": "sudo apt-get install npm nodejs build-essential g++ bluetooth bluez libbluetooth-dev libudev-dev"
   },
   "repository": {
     "type": "git",
@@ -17,10 +17,7 @@
   },
   "homepage": "https://github.com/mikedelcastillo/ble-controller#readme",
   "dependencies": {
-    "express": "^4.17.1",
     "iohook": "^0.4.6",
-    "noble": "^1.9.1",
-    "noble-mac": "github:Timeular/noble-mac",
-    "ws": "^7.0.0"
+    "noble": "^1.9.1"
   }
 }
