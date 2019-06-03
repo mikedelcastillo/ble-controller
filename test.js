@@ -25,8 +25,8 @@ noble.on('scanStop', function() {
 });
 
 noble.on('discover', function(peripheral) {
-  if(peripheral.uuid != boardUUID) return false;
   console.log('on -> discover: ', peripheral);
+  if(peripheral.uuid != boardUUID) return false;
 
   peripheral.on('connect', function() {
     console.log('on -> connect');
