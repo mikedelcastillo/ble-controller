@@ -104,15 +104,22 @@ noble.on('discover', peripheral => {
     update()
 })
 
+let projDict = {
+    17: ["W", "w"],
+    30: ["A", "a"],
+    31: ["S", "s"],
+    32: ["D", "d"],
+}
+
 ioHook.on('keydown', e => {
     keys[e.keycode] = true
-    send("1")
+    send(projDict[e.keycode][0])
     update()
 })
 
 ioHook.on('keyup', e => {
     keys[e.keycode] = false
-    send("0")
+    send(projDict[e.keycode][1])
     update()
 })
 
