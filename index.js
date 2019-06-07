@@ -113,13 +113,15 @@ let projDict = {
 
 ioHook.on('keydown', e => {
     keys[e.keycode] = true
-    send(projDict[e.keycode][0])
+    const d = projDict[e.keycode]
+    d ? send(d[0]) : null
     update()
 })
 
 ioHook.on('keyup', e => {
     keys[e.keycode] = false
-    send(projDict[e.keycode][1])
+    const d = projDict[e.keycode]
+    d ? send(d[1]) : null
     update()
 })
 
