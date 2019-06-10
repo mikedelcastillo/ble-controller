@@ -1,4 +1,6 @@
-const {keyMapping} = require('./mapping')
+const {
+    keyMapping
+} = require('./mapping')
 
 const noble = require('noble')
 const ioHook = require('iohook')
@@ -8,7 +10,7 @@ let selectedPeripheral = null
 let selectedCharacteristic = null
 let keys = {}
 
-function receive(data) {
+let receive = function receive(data) {
     console.log("RECEIVED: " + data)
 }
 
@@ -73,12 +75,12 @@ function update() {
         if (!selectedPeripheral.services) return console.log("Waiting for services...")
         selectedPeripheral.services.forEach(s => Array.prototype.push.apply(chars, (s.characteristics || [])))
         console.log("Select characteristic...")
-        for(let index = 0; index < chars.length; index++){
+        for (let index = 0; index < chars.length; index++) {
             let keyPair = keyMapping[index]
             let char = chars[index]
             console.log(`${keyPair[0]}: (uuid: ${char.uuid}) ${char.name}`)
 
-            if(keys[keyPair[1]]){
+            if (keys[keyPair[1]]) {
                 selectedCharacteristic = char
                 selectedCharacteristic.on("read", (data) => {
                     return receive(data.toString())
@@ -130,3 +132,25 @@ ioHook.on('keyup', e => {
 })
 
 ioHook.start()
+
+// express and socket server
+const express = require('express')
+const app = express()
+const ws = require('ws')
+
+const wss = new ws.Server({
+    port: 8081
+})
+
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/index.html')
+})
+
+wss.on('connection', function (ws) {
+    ws.on('message', function (message) {
+        send(message)
+    })
+    receive = (data) => ws.send(data)
+})
+
+app.listen(8080, () => console.log(`yes`))
