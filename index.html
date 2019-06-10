@@ -1,9 +1,45 @@
+<div id="out"></div>
 <script>
-    var ws = new WebSocket('ws://localhost:8081');
+    const out = document.getElementById('out')
+
+    var ws = new WebSocket('ws://localhost:8081')
     ws.onopen = function () {
         console.log('websocket is connected ...')
+        ws.send('connected')
     }
     ws.onmessage = function (ev) {
-        console.log(ev);
+        console.log(ev)
+    }
+
+    let axisLR = 0
+    let axisReverse = 2
+    let axisForward = 5
+
+    let left = 0;
+    let right = 0;
+
+    function loop(){
+        requestAnimationFrame();
+
+        if(navigator.getGamepads()[0]){
+            let {axes} = navigator.getGamepads()[0]
+
+            let LR = axes[axisLR]
+            let reverse = (1 + axes[axisReverse]) / 2
+            let forward = (1 + axes[axisForward]) / 2
+
+            let maxSpeed = 255
+            let turn = 100
+
+            left = (forward * 255) - (reverse * 255) + (LR * turn)
+            right = (forward * 255) - (reverse * 255) - (LR * turn)
+
+            try{
+                ws.send(`d${left},${right}`)
+            } catch(e){
+                console.warn(e)
+            }
+        }
+        out.innerHTML = `${left}, ${right}`
     }
 </script>
