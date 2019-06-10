@@ -19,7 +19,7 @@
     let right = 0;
 
     function loop(){
-        requestAnimationFrame();
+        requestAnimationFrame(loop);
 
         if(navigator.getGamepads()[0]){
             let {axes} = navigator.getGamepads()[0]
@@ -42,4 +42,6 @@
         }
         out.innerHTML = `${left}, ${right}`
     }
+
+    loop()
 </script>
