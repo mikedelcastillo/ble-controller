@@ -34,6 +34,9 @@
             left = (forward * 255) - (reverse * 255) + (LR * turn)
             right = (forward * 255) - (reverse * 255) - (LR * turn)
 
+            left = Math.round(left)
+            right = Math.round(right)
+
             try{
                 ws.send(`d${left},${right}`)
             } catch(e){
