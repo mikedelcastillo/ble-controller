@@ -14,6 +14,11 @@
     let axisLR = 0
     let axisReverse = 2
     let axisForward = 5
+    let buttonReverse = 6
+    let buttonForward = 7
+
+    let axisL = 1
+    let axisR = 3
 
     let left = 0;
     let right = 0;
@@ -21,17 +26,20 @@
     function loop(){
 
         if(navigator.getGamepads()[0]){
-            let {axes} = navigator.getGamepads()[0]
+            let {axes, buttons} = navigator.getGamepads()[0]
 
-            let LR = axes[axisLR]
-            let reverse = (1 + axes[axisReverse]) / 2
-            let forward = (1 + axes[axisForward]) / 2
+            // let LR = axes[axisLR]
+            // let reverse = axes[axisReverse] ? (1 + axes[axisReverse]) / 2 : buttons[buttonReverse].value
+            // let forward = axes[axisForward] ? (1 + axes[axisForward]) / 2 : buttons[buttonForward].value
 
             let maxSpeed = 255
-            let turn = 100
+            // let turn = 100
 
-            left = (forward * 255) - (reverse * 255) + (LR * turn)
-            right = (forward * 255) - (reverse * 255) - (LR * turn)
+            // left = (forward * 255) - (reverse * 255) + (LR * turn)
+            // right = (forward * 255) - (reverse * 255) - (LR * turn)
+
+            left = maxSpeed * -axes[axisL]
+            right = maxSpeed * -axes[axisR]
 
             left = Math.round(left)
             right = Math.round(right)
