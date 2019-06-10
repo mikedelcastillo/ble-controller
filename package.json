@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/mikedelcastillo/ble-controller#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "iohook": "^0.4.6",
-    "noble": "^1.9.1"
+    "noble": "^1.9.1",
+    "ws": "^7.0.0"
   }
 }
