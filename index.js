@@ -17,7 +17,7 @@ let receive = function receive(data) {
 function send(string) {
     if (selectedPeripheral && selectedCharacteristic) {
         selectedCharacteristic.write(
-            new Buffer(string),
+            new Buffer(string + "\n"),
             true,
             function (error) {
                 if (!error) {
